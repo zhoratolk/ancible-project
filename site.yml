@@ -1,27 +1,33 @@
 ---
-- name: Configure NTP server
+- name: Configure NTP
   hosts: ntp
   become: true
-  roles:
-    - role: geerlingguy.ntp
+  roles: [{ role: geerlingguy.ntp, tags: ntp }]
 
-- name: Configure App server
+- name: Configure App
   hosts: app
   become: true
-  roles:
-    - role: geerlingguy.nginx
+  roles: [{ role: geerlingguy.nginx, tags: nginx }]
+  tasks:
+    - name: Deploy template
+      ansible.builtin.template:
+        src: templates/index.html.j2
+        dest: /usr/share/nginx/html/index.html
+      notify: reload nginx
+      tags: app_template
 
-- name: Configure DB server
+- name: Configure DB
   hosts: db
   become: true
-  roles:
-    - role: geerlingguy.postgresql
+  roles: [{ role: geerlingguy.postgresql, tags: db }]
 
-- name: Display Summary
-  hosts: app
-  tasks:
-    - name: Show Nginx details
+- hosts: all
+  become: true
+  handlers:
+    - name: reload nginx
+      ansible.builtin.service: { name: nginx, state: reloaded }
+  post_tasks:
+    - name: Debug info
       ansible.builtin.debug:
-        msg:
-          - "Nginx status check completed"
-          - "Logs location: /var/log/nginx/"
+        msg: "Nginx version check and logs path"
+      tags: debug_info
