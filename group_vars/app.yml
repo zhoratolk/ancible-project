@@ -1,0 +1,4 @@
+---
+# Настройки для Nginx
+nginx_remove_default_vhost: true
+app_page_title: "Welcome to Zhora's App Server"

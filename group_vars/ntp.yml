@@ -1,0 +1,4 @@
+---
+# Настройки сервера времени
+ntp_enabled: true
+ntp_timezone: "Europe/Moscow"

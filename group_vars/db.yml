@@ -1,0 +1,8 @@
+---
+# Переменные для роли geerlingguy.postgresql
+postgresql_version: "13"
+postgresql_python_library: python3-psycopg2
+
+# Настройка ACL: разрешаем доступ только с localhost через md5
+postgresql_pg_hba_conf:
+  - { type: host, database: all, user: all, address: "127.0.0.1/32", method: md5 }
