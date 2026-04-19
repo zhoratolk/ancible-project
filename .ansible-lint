@@ -1,0 +1,11 @@
+---
+# Исключаем папку со скачанными ролями из проверки
+exclude_paths:
+  - roles/geerlingguy.ntp/
+  - roles/geerlingguy.nginx/
+  - roles/geerlingguy.postgresql/
+
+# Пропускаем правила, которые ругаются на зависимости
+skip_list:
+  - metadata
+  - role-name

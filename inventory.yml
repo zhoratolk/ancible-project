@@ -1,0 +1,15 @@
+---
+all:
+  children:
+    ntp:
+      hosts:
+        ntp_server:
+          ansible_host: 10.0.0.1
+    app:
+      hosts:
+        app_server:
+          ansible_host: 10.0.0.2
+    db:
+      hosts:
+        db_server:
+          ansible_host: 10.0.0.3

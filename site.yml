@@ -1,0 +1,27 @@
+---
+- name: Configure NTP server
+  hosts: ntp
+  become: true
+  roles:
+    - role: geerlingguy.ntp
+
+- name: Configure App server
+  hosts: app
+  become: true
+  roles:
+    - role: geerlingguy.nginx
+
+- name: Configure DB server
+  hosts: db
+  become: true
+  roles:
+    - role: geerlingguy.postgresql
+
+- name: Display Summary
+  hosts: app
+  tasks:
+    - name: Show Nginx details
+      ansible.builtin.debug:
+        msg:
+          - "Nginx status check completed"
+          - "Logs location: /var/log/nginx/"
